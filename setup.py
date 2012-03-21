@@ -24,7 +24,7 @@ except ImportError:
 
 
 setup(name='pyspotlight',
-      version=__import__('spotlight').__version__,
+      version='0.5.1',
       license='BSD',
       url='https://github.com/newsgrape/pyspotlight',
       packages=find_packages(),
