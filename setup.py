@@ -14,7 +14,7 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
 ]
 
-requires = ["requests==0.10.8", ]
+requires = ["requests>=0.11.1", ]
 
 # This might not be the best idea.
 try:
@@ -24,7 +24,7 @@ except ImportError:
 
 
 setup(name='pyspotlight',
-      version='0.5.1',
+      version='0.5.2',
       license='BSD',
       url='https://github.com/newsgrape/pyspotlight',
       packages=find_packages(),
