@@ -10,12 +10,20 @@ except ImportError:
 import requests
 
 
+class SpotlightException(Exception):
+    """
+    Exception raised on Spotlight failures.
+    """
+    pass
+
+
 # Some helper functions.
 def _convert_number(value):
     """
     Try to convert a string to an int or float.
     """
-    if isinstance(value, bool): return value
+    if isinstance(value, bool):
+        return value
 
     try:
         return int(value)
@@ -32,6 +40,9 @@ def _dict_cleanup(dic, dict_type=dict):
     """
     clean = dict_type()
     for key, value in dic.iteritems():
+        if value is None:
+            continue
+
         key = key.replace('@', '')
         try:
             try:
@@ -111,7 +122,16 @@ def annotate(address, text, confidence=0.0, support=0,
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers)
     response = requests.post(address, data=payload, headers=reqheaders)
-    pydict = json.loads(response.text)
+    try:
+        pydict = json.loads(response.text)
+    except ValueError:
+        raise SpotlightException("Spotlight's response did not contain valid "
+                                 "JSON: %s" % response.text)
+
+    if not 'Resources' in pydict:
+        raise SpotlightException(
+                'No Resources found in spotlight response: %s' % pydict)
+
     return [_dict_cleanup(resource) for resource in pydict['Resources']]
 
 
@@ -169,6 +189,18 @@ def candidates(address, text, confidence=0.0, support=0,
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers)
     response = requests.post(address, data=payload, headers=reqheaders)
-    pydict = json.loads(response.text)
+    try:
+        pydict = json.loads(response.text)
+    except ValueError:
+        raise SpotlightException("Spotlight's response did not contain valid "
+                                 "JSON: %s" % response.text)
+
+    if not 'annotation' in pydict:
+        raise SpotlightException(
+                'No annotations found in spotlight response: %s' % pydict)
+    if not 'surfaceForm' in pydict['annotation']:
+        raise SpotlightException(
+                'No surface forms found in spotlight response: %s' % pydict)
+
     return [_dict_cleanup(form)
             for form in pydict['annotation']['surfaceForm']]
