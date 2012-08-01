@@ -3,9 +3,9 @@ __version__ = '.'.join(map(str, __version_info__))
 
 
 try:
-    import json
-except ImportError:
     import simplejson as json
+except ImportError:
+    import json
 
 import requests
 
