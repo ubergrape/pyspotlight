@@ -14,8 +14,14 @@ import spotlight
 
 @nottest
 def fake_request_post(self, *args, **kwargs):
-    class FakeResponse(object):
+    class FakeResponse(spotlight.requests.models.Response):
         text = kwargs['headers']['fake_response']
+
+        def raise_for_status(self):
+            self.status_code = (kwargs['headers']['fake_status']
+                                if 'fake_status' in kwargs['headers']
+                                else spotlight.requests.codes.ok)
+            return super(FakeResponse, self).raise_for_status()
     return FakeResponse()
 spotlight.requests.post = fake_request_post
 
@@ -25,6 +31,13 @@ def test_number_convert():
     eq_(spotlight._convert_number('0.2'), 0.2)
     eq_(spotlight._convert_number(True), True)
     eq_(spotlight._convert_number('evi'), 'evi')
+
+
+@raises(spotlight.requests.exceptions.HTTPError)
+def test_http_fail():
+    spotlight.annotate('localhost', 'asdasdasd',
+                       headers={'fake_response': 'invalid json',
+                                'fake_status': 502})
 
 
 @raises(spotlight.SpotlightException)

@@ -1,4 +1,21 @@
-__version_info__ = (0, 5, 2)
+"""
+Python DBpedia Spotlight API Wrapper
+====================================
+
+This is just a simple interface to a Spotlight API.
+
+Tested with DBPedia Spotlight 0.5.
+
+Note that I'm trying to track Spotlight release version numbers, so you can
+easily see which pyspotlight version has been tested with which Spotlight
+release.
+
+I hope the code and the small documentation speaks for itself :-)
+
+If you should encounter any problems, feel free to contact me on github
+(originell). I'm happy to help out with anything related to my code.
+"""
+__version_info__ = (0, 5, 3)
 __version__ = '.'.join(map(str, __version_info__))
 
 
@@ -13,6 +30,9 @@ import requests
 class SpotlightException(Exception):
     """
     Exception raised on Spotlight failures.
+
+    Basically this exception is raised if there was no valid JSON response
+    from Spotlight.
     """
     pass
 
@@ -37,6 +57,9 @@ def _convert_number(value):
 def _dict_cleanup(dic, dict_type=dict):
     """
     Clean the response dictionary from ugly @ signs in keys.
+
+    TODO: Make this an iteration based recursion instead of function based.
+          That way we can avoid stack fails.
     """
     clean = dict_type()
     for key, value in dic.iteritems():
@@ -75,6 +98,10 @@ def annotate(address, text, confidence=0.0, support=0,
              policy='whitelist', headers={}):
     """
     Annotate a text.
+
+    Can raise :exc:`requests.exceptions.HTTPError` or
+    :exc:`SpotlightException`, depending on where the failure is (HTTP status
+    code not 200 or the response not containing valid json).
 
     :param address:
         The absolute address of the annotate REST API.
@@ -122,6 +149,10 @@ def annotate(address, text, confidence=0.0, support=0,
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers)
     response = requests.post(address, data=payload, headers=reqheaders)
+    if response.status_code != requests.codes.ok:
+        # Every http code besides 200 shall raise an exception.
+        response.raise_for_status()
+
     try:
         pydict = json.loads(response.text)
     except ValueError:
@@ -143,43 +174,7 @@ def candidates(address, text, confidence=0.0, support=0,
     """
     Get the candidates from a text.
 
-    :param address:
-        The absolute address of the annotate REST API.
-    :type address: string
-
-    :param text:
-        The text to be sent.
-    :type text: string
-
-    :param confidence:
-        Filter out annotations below a given confidence.
-        Based on my experience I would suggest you set this to something
-        above 0.4, however your experience might vary from text to text.
-    :type confidence: float
-
-    :param support:
-        Only output annotations above a given prominence (support).
-        Based on my experience I would suggest you set this to something
-        above 20, however your experience might vary from text to text.
-    :type support: int
-
-    :param spotter:
-        One of spotters available on your DBPedia Spotlight server.
-        For example one of: LingPipeSpotter, AtLeastOneNounSelector,
-                            CoOccurrenceBasedSelector
-    :type spotter: string
-
-    :param disambiguator:
-        The disambiguator to use on the annotation.
-    :type disambiguator: string
-
-    :param policy:
-        The policy to be used.
-    :type disambiguator: string
-
-    :param headers:
-        Additional headers to be set on the request.
-    :type headers: dictionary
+    Uses the same arguments as :meth:`annotate`.
 
     :rtype: list of surface forms
     """
@@ -189,6 +184,10 @@ def candidates(address, text, confidence=0.0, support=0,
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers)
     response = requests.post(address, data=payload, headers=reqheaders)
+    if response.status_code != requests.codes.ok:
+        # Every http code besides 200 shall raise an exception.
+        response.raise_for_status()
+
     try:
         pydict = json.loads(response.text)
     except ValueError:
