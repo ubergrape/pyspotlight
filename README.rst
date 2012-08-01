@@ -7,6 +7,11 @@ is a thin python wrapper around the `DBPedia Spotlight REST Interface`_.
 The currently supported spotlight version is 0.5. However, as long as there
 are no major API overhauls, this wrapper might also work with future versions.
 
+Note that I'm trying to track Spotlight release version numbers, so you can
+easily see which pyspotlight version has been tested with which Spotlight
+release. Therefore all pyspotlight 0.5 releases are tested against
+Spotlight 0.5.
+
 .. _`DBPedia Spotlight REST Interface`: http://www.opencalais.com/documentation/calais-web-service-api
 
 Requirements
@@ -45,6 +50,15 @@ We might get this back::
       u'types': u'DBpedia:OfficeHolder,DBpedia:Person,Schema:Person,Freebase:/book/book_subject,Freebase:/book,Freebase:/book/periodical_subject,Freebase:/media_common/quotation_subject,Freebase:/media_common'},…(truncated remaining elements)…]
 
 The same parameters apply to the `spotlight.candidates` function.
+
+The following exceptions can occur:
+
+* `SpotlightException`  
+  This can happen if the response from spotlight did not contain any valid json
+* `requests.exceptions.HTTPError`  
+  Is thrown when the response http status code was *not* 200. This could happen
+  if you have a load balancer like nginx in front of your spotlight cluster and
+  there is not a single server available, so nginx throws a `502 Bad Gateway`.
 
 Note that the API also supports a `disambiguate` interface, however I wasn't
 able to get it running. Therefore there is *no* `disambiguate` function
