@@ -2,17 +2,18 @@
 pyspotlight
 ===========
 
-is a thin python wrapper around the `DBPedia Spotlight REST Interface`_.
+is a thin python wrapper around `DBpedia Spotlight`_'s `REST Interface`_.
 
-The currently supported spotlight version is 0.5. However, as long as there
+The currently supported DBpedia Spotlight version is 0.5. However, as long as there
 are no major API overhauls, this wrapper might also work with future versions.
 
-Note that I'm trying to track Spotlight release version numbers, so you can
+Note that I'm trying to track DBpedia Spotlight release version numbers, so you can
 easily see which pyspotlight version has been tested with which Spotlight
 release. Therefore all pyspotlight 0.5 releases are tested against
 Spotlight 0.5.
 
-.. _`DBPedia Spotlight REST Interface`: http://www.opencalais.com/documentation/calais-web-service-api
+.. _`DBpedia Spotlight`: https://github.com/dbpedia-spotlight/dbpedia-spotlight#dbpedia-spotlight
+.. _`REST Interface`: https://github.com/dbpedia-spotlight/dbpedia-spotlight/wiki/Web-service
 
 Requirements
 ============
