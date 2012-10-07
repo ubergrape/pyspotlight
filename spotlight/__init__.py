@@ -19,11 +19,6 @@ __version_info__ = (0, 5, 3)
 __version__ = '.'.join(map(str, __version_info__))
 
 
-try:
-    import simplejson as json
-except ImportError:
-    import json
-
 import requests
 
 
@@ -161,9 +156,8 @@ def annotate(address, text, confidence=0.0, support=0,
         # Every http code besides 200 shall raise an exception.
         response.raise_for_status()
 
-    try:
-        pydict = json.loads(response.text)
-    except ValueError:
+    pydict = response.json
+    if pydict is None:
         raise SpotlightException("Spotlight's response did not contain valid "
                                  "JSON: %s" % response.text)
 
@@ -196,9 +190,8 @@ def candidates(address, text, confidence=0.0, support=0,
         # Every http code besides 200 shall raise an exception.
         response.raise_for_status()
 
-    try:
-        pydict = json.loads(response.text)
-    except ValueError:
+    pydict = response.json
+    if pydict is None:
         raise SpotlightException("Spotlight's response did not contain valid "
                                  "JSON: %s" % response.text)
 

@@ -22,26 +22,19 @@ Requirements
 
 This module has been tested with Python 2.6 and Python 2.7.
 
-Python versions <= 2.6 need the ``simplejson`` and ``ordereddict`` modules
-installed.
-
-Furthermore you will need the awesome ``requests`` library.
-
 As long as you use the ``setup.py`` for the installation
 (``python setup.py install``), you'll be fine because Python takes care of the
 dependencies for you.
 
-Note about JSON
----------------
+If you decide not to use the ``setup.py`` you will need the ``requests``
+library. In case you are running a Python Version older than 2.7, you will
+also need to install the ``ordereddict`` module.
 
-Python's ``json`` version sacrifices speed for portability (most stuff in
-Python has to work cross-platform, so that is fine). If you see that the parsing
-of JSON is a bottleneck, you might consider installing ``simplejson`` after all,
-since it has C optimisations turned on.
+All of these packages can be found on the `Python PackageIndex`_ and easily
+installed via either ``easy_install`` or, `the recommended`_, ``pip``
 
-Please note that I never, ever, had the Python 2.7+ builtin ``json`` module being
-a bottleneck. I just think it could be useful for general knowledge, so I put it
-here.
+.. _`Python PackageIndex`: http://pypi.python.org/
+.. _`the recommended`: http://stackoverflow.com/questions/3220404/why-use-pip-over-easy-install
 
 Usage
 =====
