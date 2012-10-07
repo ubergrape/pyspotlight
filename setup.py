@@ -14,7 +14,7 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
 ]
 
-requires = ["requests>=0.11.1", ]
+requires = ["requests==0.14.1", ]
 
 # This might not be the best idea.
 try:
