@@ -22,15 +22,20 @@ Requirements
 
 This module has been tested with Python 2.6 and Python 2.7.
 
-Python <2.6 need the ``simplejson`` module to be installed.
+Python versions <= 2.6 need the ``simplejson`` and ``ordereddict`` modules
+installed.
 
 Furthermore you will need the awesome ``requests`` library.
+
+As long as you use the ``setup.py`` for the installation
+(``python setup.py install``), you'll be fine because Python takes care of the
+dependencies for you.
 
 Usage
 =====
 
 Sidenote: if you just want to play around with spotlight, there is a running
-version available under `http://spotlight.dbpedia.org/rest/annotate`.
+version available under ``http://spotlight.dbpedia.org/rest/annotate``.
 
 Usage is simple and easy, just as is the API::
 
