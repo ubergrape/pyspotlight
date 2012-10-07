@@ -51,6 +51,8 @@ available under ``http://spotlight.dbpedia.org/rest/annotate``.
 
 Usage is simple and easy, just as is the API::
 
+    .. code:: python
+
     >>> import spotlight
     >>> annotations = spotlight.annotate('http://localhost/rest/annotate',
     ...                                  'Your test text',
@@ -62,6 +64,8 @@ Assuming we did this for the following text::
     President Obama on Monday will call for a new minimum tax rate for individuals making more than $1 million a year to ensure that they pay at least the same percentage of their earnings as other taxpayers, according to administration officials.
 
 We might get this back::
+
+    .. code:: python
 
     >>> annotation
     [{u'URI': u'http://dbpedia.org/resource/Presidency_of_Barack_Obama',
@@ -76,8 +80,7 @@ The same parameters apply to the ``spotlight.candidates`` function.
 
 The following exceptions can occur:
 
-* ``SpotlightException``  
-  When:
+* ``SpotlightException`` when:
 
   - the response from spotlight did not contain any valid JSON.
   - the JSON response did not contain any needed fields or was not formed as
@@ -88,10 +91,12 @@ The following exceptions can occur:
   not, I might have forgotten some error handling. So just open up an issue on
   github.
 
-* ``requests.exceptions.HTTPError``  
+* ``requests.exceptions.HTTPError``
+
   Is thrown when the response http status code was *not* ``200``. This could happen
   if you have a load balancer like nginx in front of your spotlight cluster and
   there is not a single server available, so nginx throws a ``502 Bad Gateway``.
+
 
 Note that the API also supports a ``disambiguate`` interface, however I wasn't
 able to get it running. Therefore there is *no* ``disambiguate`` function
@@ -106,6 +111,8 @@ at their *smiliarityScore* (read: contextual score).
 
 If you want to change the default values, feel free to use ``itertools.partial``
 to create a little wrapper with simplified signature::
+
+    .. code:: python
 
     >>> from spotlight import annotate
     >>> from functools import partial
