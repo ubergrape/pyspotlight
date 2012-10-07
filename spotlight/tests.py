@@ -7,6 +7,7 @@ except ImportError:
     sys.stderr.write('Skipping _dict_cleanup due to OrderedDict not being '
                      'available.\n')
 
+from collections import namedtuple
 from nose.tools import eq_, nottest, raises
 
 import spotlight
@@ -14,10 +15,14 @@ import spotlight
 
 @nottest
 def fake_request_post(self, *args, **kwargs):
+    RawResponse = namedtuple('RawResponse', ['reason',])
+    hear_me_RawR = RawResponse(reason='Just a fake reason.')
+
     class FakeResponse(spotlight.requests.models.Response):
         text = kwargs['headers']['fake_response']
 
         def raise_for_status(self):
+            self.raw = hear_me_RawR
             self.status_code = (kwargs['headers']['fake_status']
                                 if 'fake_status' in kwargs['headers']
                                 else spotlight.requests.codes.ok)
@@ -34,7 +39,7 @@ def test_number_convert():
 
 
 @raises(spotlight.SpotlightException)
-def test_protocol_fail():
+def test_protocol_missing():
     spotlight.annotate('localhost', 'asdasdasd',
                        headers={'fake_response': 'invalid json',
                                 'fake_status': 502})
