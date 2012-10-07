@@ -148,6 +148,14 @@ def annotate(address, text, confidence=0.0, support=0,
                'policy': policy, 'text': text}
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers)
+
+    # Its better for the user to have to explicitly provide a protocl in the
+    # URL, since transmissions might happen over HTTPS or any other secure or
+    # faster (spdy :D) channel.
+    if not '://' in address:
+        raise SpotlightException('Oops. Looks like you forgot the protocol '
+                                 '(http/https) in your url (%s).' % address)
+
     response = requests.post(address, data=payload, headers=reqheaders)
     if response.status_code != requests.codes.ok:
         # Every http code besides 200 shall raise an exception.

@@ -33,40 +33,47 @@ def test_number_convert():
     eq_(spotlight._convert_number('evi'), 'evi')
 
 
+@raises(spotlight.SpotlightException)
+def test_protocol_fail():
+    spotlight.annotate('localhost', 'asdasdasd',
+                       headers={'fake_response': 'invalid json',
+                                'fake_status': 502})
+
+
 @raises(spotlight.requests.exceptions.HTTPError)
 def test_http_fail():
-    spotlight.annotate('localhost', 'asdasdasd',
+    spotlight.annotate('http://localhost', 'asdasdasd',
                        headers={'fake_response': 'invalid json',
                                 'fake_status': 502})
 
 
 @raises(spotlight.SpotlightException)
 def test_annotation_invalid_json():
-    spotlight.annotate('localhost', 'asdasdasd',
+    spotlight.annotate('http://localhost', 'asdasdasd',
                        headers={'fake_response': 'invalid json'})
 
 
 @raises(spotlight.SpotlightException)
 def test_missing_resources():
-    spotlight.annotate('localhost', 'asdasdasd',
+    spotlight.annotate('http://localhost', 'asdasdasd',
             headers={'fake_response': '{"Test": "Win"}'})
 
 
 @raises(spotlight.SpotlightException)
 def test_candidates_invalid_json():
-    spotlight.annotate('localhost', 'asdasdasd',
+    spotlight.annotate('http://localhost', 'asdasdasd',
                        headers={'fake_response': 'invalid json'})
 
 
 @raises(spotlight.SpotlightException)
 def test_missing_annotation():
-    spotlight.candidates('localhost', 'asdasdasd',
+    spotlight.candidates('http://localhost', 'asdasdasd',
             headers={'fake_response': '{"Test": "Win"}'})
 
 
 @raises(spotlight.SpotlightException)
 def test_missing_surfaceForms():
-    spotlight.candidates('localhost', 'asdasdasd',
+    spotlight.candidates('http://localhost', 'asdasdasd',
             headers={'fake_response': '{"annotation": {"Test": "Win"}}'})
 
 
