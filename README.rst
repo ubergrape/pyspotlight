@@ -35,7 +35,7 @@ Usage
 =====
 
 Sidenote: if you just want to play around with spotlight, there is a running
-version available under ``http://spotlight.dbpedia.org/rest/annotate``.
+          version available under ``http://spotlight.dbpedia.org/rest/annotate``.
 
 Usage is simple and easy, just as is the API::
 
