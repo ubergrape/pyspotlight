@@ -51,12 +51,10 @@ available under ``http://spotlight.dbpedia.org/rest/annotate``.
 
 Usage is simple and easy, just as is the API::
 
-   .. code-block:: python
-
-   >>> import spotlight
-   >>> annotations = spotlight.annotate('http://localhost/rest/annotate',
-   ...                                  'Your test text',
-   ...                                  confidence=0.4, support=20)
+    >>> import spotlight
+    >>> annotations = spotlight.annotate('http://localhost/rest/annotate',
+    ...                                  'Your test text',
+    ...                                  confidence=0.4, support=20)
 
 This should return a list of all resources found within the given text.
 Assuming we did this for the following text::
@@ -65,16 +63,14 @@ Assuming we did this for the following text::
 
 We might get this back::
 
-   .. code-block:: python
-
-   >>> annotation
-   [{u'URI': u'http://dbpedia.org/resource/Presidency_of_Barack_Obama',
-     u'offset': 0,
-     u'percentageOfSecondRank': -1.0,
-     u'similarityScore': 0.10031112283468246,
-     u'support': 134,
-     u'surfaceForm': u'President Obama',
-     u'types': u'DBpedia:OfficeHolder,DBpedia:Person,Schema:Person,Freebase:/book/book_subject,Freebase:/book,Freebase:/book/periodical_subject,Freebase:/media_common/quotation_subject,Freebase:/media_common'},…(truncated remaining elements)…]
+    >>> annotation
+    [{u'URI': u'http://dbpedia.org/resource/Presidency_of_Barack_Obama',
+      u'offset': 0,
+      u'percentageOfSecondRank': -1.0,
+      u'similarityScore': 0.10031112283468246,
+      u'support': 134,
+      u'surfaceForm': u'President Obama',
+      u'types': u'DBpedia:OfficeHolder,DBpedia:Person,Schema:Person,Freebase:/book/book_subject,Freebase:/book,Freebase:/book/periodical_subject,Freebase:/media_common/quotation_subject,Freebase:/media_common'},…(truncated remaining elements)…]
 
 The same parameters apply to the ``spotlight.candidates`` function.
 
@@ -112,16 +108,14 @@ at their *smiliarityScore* (read: contextual score).
 If you want to change the default values, feel free to use ``itertools.partial``
 to create a little wrapper with simplified signature::
 
-   .. code-block:: python
-
-   >>> from spotlight import annotate
-   >>> from functools import partial
-   >>> api = partial(annotate, 'http://localhost/rest/annotate',
-   ...               confidence=0.4, support=20,
-   ...               spotter='AtLeastOneNounSelector')
-   >>> api('This is your test text. This function has other confidence,
-   ...      support and uses another spotter. Furthermore all calls go
-   ...      directl to localhost/rest/annotate.')
+    >>> from spotlight import annotate
+    >>> from functools import partial
+    >>> api = partial(annotate, 'http://localhost/rest/annotate',
+    ...               confidence=0.4, support=20,
+    ...               spotter='AtLeastOneNounSelector')
+    >>> api('This is your test text. This function has other confidence,
+    ...      support and uses another spotter. Furthermore all calls go
+    ...      directl to localhost/rest/annotate.')
 
 As you can see this reduces the function's complexity greatly.
 I did not feel the need to create fancy classes, they would've just lead to
