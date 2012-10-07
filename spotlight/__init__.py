@@ -4,7 +4,7 @@ Python DBpedia Spotlight API Wrapper
 
 This is just a simple interface to a Spotlight API.
 
-Tested with DBPedia Spotlight 0.5.
+Tested with DBPedia Spotlight 0.5 and 0.6.5.
 
 Note that I'm trying to track Spotlight release version numbers, so you can
 easily see which pyspotlight version has been tested with which Spotlight
@@ -15,7 +15,7 @@ I hope the code and the small documentation speaks for itself :-)
 If you should encounter any problems, feel free to contact me on github
 (originell). I'm happy to help out with anything related to my code.
 """
-__version_info__ = (0, 5, 3)
+__version_info__ = (0, 6, 5)
 __version__ = '.'.join(map(str, __version_info__))
 
 

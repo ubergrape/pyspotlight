@@ -4,10 +4,10 @@ pyspotlight
 
 is a thin python wrapper around `DBpedia Spotlight`_'s `REST Interface`_.
 
-The currently supported DBpedia Spotlight version is 0.5. However, as long as
-there are no major API overhauls, this wrapper might also work with future
-versions. If you encounter a bug with a newer DBpedia version, feel free to
-create an issue here on github.
+The currently supported DBpedia Spotlight versions are 0.5 and 0.6.5.
+However, as long as there are no major API overhauls, this wrapper might also
+work with future versions. If you encounter a bug with a newer DBpedia version,
+feel free to create an issue here on github.
 
 Note that I'm trying to track DBpedia Spotlight release version numbers, so you can
 easily see which pyspotlight version has been tested with which Spotlight
