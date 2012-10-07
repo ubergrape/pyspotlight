@@ -50,7 +50,6 @@ if you just want to play around with spotlight, there is a running version
 available under ``http://spotlight.dbpedia.org/rest/annotate``.
 
 Usage is simple and easy, just as is the API::
-
     .. code:: python
 
     >>> import spotlight
@@ -64,7 +63,6 @@ Assuming we did this for the following text::
     President Obama on Monday will call for a new minimum tax rate for individuals making more than $1 million a year to ensure that they pay at least the same percentage of their earnings as other taxpayers, according to administration officials.
 
 We might get this back::
-
     .. code:: python
 
     >>> annotation
@@ -111,7 +109,6 @@ at their *smiliarityScore* (read: contextual score).
 
 If you want to change the default values, feel free to use ``itertools.partial``
 to create a little wrapper with simplified signature::
-
     .. code:: python
 
     >>> from spotlight import annotate
