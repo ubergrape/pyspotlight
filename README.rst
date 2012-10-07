@@ -72,11 +72,11 @@ We might get this back::
       u'surfaceForm': u'President Obama',
       u'types': u'DBpedia:OfficeHolder,DBpedia:Person,Schema:Person,Freebase:/book/book_subject,Freebase:/book,Freebase:/book/periodical_subject,Freebase:/media_common/quotation_subject,Freebase:/media_common'},…(truncated remaining elements)…]
 
-The same parameters apply to the `spotlight.candidates` function.
+The same parameters apply to the ``spotlight.candidates`` function.
 
 The following exceptions can occur:
 
-* `SpotlightException`  
+* ``SpotlightException``  
   When:
 
   - the response from spotlight did not contain any valid JSON.
@@ -88,13 +88,13 @@ The following exceptions can occur:
   not, I might have forgotten some error handling. So just open up an issue on
   github.
 
-* `requests.exceptions.HTTPError`  
-  Is thrown when the response http status code was *not* 200. This could happen
+* ``requests.exceptions.HTTPError``  
+  Is thrown when the response http status code was *not* ``200``. This could happen
   if you have a load balancer like nginx in front of your spotlight cluster and
-  there is not a single server available, so nginx throws a `502 Bad Gateway`.
+  there is not a single server available, so nginx throws a ``502 Bad Gateway``.
 
-Note that the API also supports a `disambiguate` interface, however I wasn't
-able to get it running. Therefore there is *no* `disambiguate` function
+Note that the API also supports a ``disambiguate`` interface, however I wasn't
+able to get it running. Therefore there is *no* ``disambiguate`` function
 available. Feel free to contribute :-)!
 
 Tips
@@ -104,7 +104,7 @@ I'd highly recommend playing around with the *confidence* and *support* values.
 Furthermore it might be preferable to filter out more annotations by looking
 at their *smiliarityScore* (read: contextual score).
 
-If you want to change the default values, feel free to use `itertools.partial`
+If you want to change the default values, feel free to use ``itertools.partial``
 to create a little wrapper with simplified signature::
 
     >>> from spotlight import annotate
