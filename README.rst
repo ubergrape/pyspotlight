@@ -33,6 +33,12 @@ also need to install the ``ordereddict`` module.
 All of these packages can be found on the `Python PackageIndex`_ and easily
 installed via either ``easy_install`` or, `the recommended`_, ``pip``.
 
+Using ``pip`` it is especially easy because you can just do this::
+
+    pip install -r requirements.txt
+
+and it will install all packages from that file.
+
 .. _`Python PackageIndex`: http://pypi.python.org/
 .. _`the recommended`: http://stackoverflow.com/questions/3220404/why-use-pip-over-easy-install
 
