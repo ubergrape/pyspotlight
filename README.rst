@@ -65,7 +65,17 @@ The same parameters apply to the `spotlight.candidates` function.
 The following exceptions can occur:
 
 * `SpotlightException`  
-  This can happen if the response from spotlight did not contain any valid json
+  When:
+
+  - the response from spotlight did not contain any valid JSON.
+  - the JSON response did not contain any needed fields or was not formed as
+    excepted.
+  - You forgot to explicitly specify a protocol (http/https) in the API URL.
+
+  Usually the exception's message is telling you *exactly* what is wrong. If
+  not, I might have forgotten some error handling. So just open up an issue on
+  github.
+
 * `requests.exceptions.HTTPError`  
   Is thrown when the response http status code was *not* 200. This could happen
   if you have a load balancer like nginx in front of your spotlight cluster and
