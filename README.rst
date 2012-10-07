@@ -31,11 +31,23 @@ As long as you use the ``setup.py`` for the installation
 (``python setup.py install``), you'll be fine because Python takes care of the
 dependencies for you.
 
+Note about JSON
+---------------
+
+Python's ``json`` version sacrifices speed for portability (most stuff in
+Python has to work cross-platform, so that is fine). If you see that the parsing
+of JSON is a bottleneck, you might consider installing ``simplejson`` after all,
+since it has C optimisations turned on.
+
+Please note that I never, ever, had the Python 2.7+ builtin ``json`` module being
+a bottleneck. I just think it could be useful for general knowledge, so I put it
+here.
+
 Usage
 =====
 
-Sidenote: if you just want to play around with spotlight, there is a running
-          version available under ``http://spotlight.dbpedia.org/rest/annotate``.
+if you just want to play around with spotlight, there is a running version
+available under ``http://spotlight.dbpedia.org/rest/annotate``.
 
 Usage is simple and easy, just as is the API::
 
