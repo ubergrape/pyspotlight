@@ -119,3 +119,10 @@ to create a little wrapper with simplified signature::
 As you can see this reduces the function's complexity greatly.
 I did not feel the need to create fancy classes, they would've just lead to
 more complexity.
+
+Tests
+=====
+
+If you want to run the tests, you will have to install ``nose`` (1.2.1) from the
+package index. Then you can simply run ``nosetests`` from the command line in
+this or the ``spotlight/`` directory.
