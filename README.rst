@@ -30,7 +30,7 @@ Usage
 Usage is simple and easy, just as is the API::
 
     >>> import spotlight
-    >>> annotations = spotlight.annotate('localhost/rest/annotate',
+    >>> annotations = spotlight.annotate('http://localhost/rest/annotate',
     ...                                  'Your test text',
     ...                                  confidence=0.4, support=20)
 
@@ -77,8 +77,9 @@ to create a little wrapper with simplified signature::
 
     >>> from spotlight import annotate
     >>> from functools import partial
-    >>> api = partial(annotate, 'localhost/rest/annotate', confidence=0.4,
-    ...               support=20, spotter='AtLeastOneNounSelector')
+    >>> api = partial(annotate, 'http://localhost/rest/annotate',
+    ...               confidence=0.4, support=20,
+    ...               spotter='AtLeastOneNounSelector')
     >>> api('This is your test text. This function has other confidence,
     ...      support and uses another spotter. Furthermore all calls go
     ...      directl to localhost/rest/annotate.')
