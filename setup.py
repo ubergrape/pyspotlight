@@ -23,6 +23,14 @@ except ImportError:
     requires.append('simplejson>=2.0')
 
 
+# Python 2.6 does not ship with an OrderedDict implementation.
+# God save the cheeseshop!
+try:
+    from collections import OrderedDict
+except ImportError:
+    requires.append('ordereddict>=1.1')
+
+
 setup(name='pyspotlight',
       version='0.5.3',
       license='BSD',
