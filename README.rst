@@ -31,7 +31,7 @@ library. In case you are running a Python Version older than 2.7, you will
 also need to install the ``ordereddict`` module.
 
 All of these packages can be found on the `Python PackageIndex`_ and easily
-installed via either ``easy_install`` or, `the recommended`_, ``pip``
+installed via either ``easy_install`` or, `the recommended`_, ``pip``.
 
 .. _`Python PackageIndex`: http://pypi.python.org/
 .. _`the recommended`: http://stackoverflow.com/questions/3220404/why-use-pip-over-easy-install
