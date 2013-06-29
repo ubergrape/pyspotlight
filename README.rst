@@ -126,3 +126,9 @@ Tests
 If you want to run the tests, you will have to install ``nose`` (1.2.1) from the
 package index. Then you can simply run ``nosetests`` from the command line in
 this or the ``spotlight/`` directory.
+
+Bugs
+====
+
+In case you spot a bug, please open an issue and attach the raw response you
+sent. Have a look at Issue #3 for a great example on how to file a bug report.
