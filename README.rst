@@ -131,4 +131,6 @@ Bugs
 ====
 
 In case you spot a bug, please open an issue and attach the raw response you
-sent. Have a look at [Issue #3](https://github.com/newsgrape/pyspotlight/issues/3) for a great example on how to file a bug report.
+sent. Have a look at `Issue #3`_ for a great example on how to file a bug report.
+
+.. _`Issue #3`: https://github.com/newsgrape/pyspotlight/issues/3
