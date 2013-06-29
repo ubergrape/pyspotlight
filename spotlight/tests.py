@@ -82,6 +82,76 @@ def test_missing_surfaceForms():
             headers={'fake_response': '{"annotation": {"Test": "Win"}}'})
 
 
+
+def test_single_candidate():
+    # Test with a single returned candidate, as was reported by issue #3.
+    # Thanks to aolieman for the awesome test data!
+    data = """
+{
+   "annotation":{
+      "@text":"Industrial Design at the Technische Universiteit Delft",
+      "surfaceForm":{
+         "@name":"Technische Universiteit Delft",
+         "@offset":"25",
+         "resource":[
+            {
+               "@label":"Technische Universiteit Delft",
+               "@uri":"Technische_Universiteit_Delft",
+               "@contextualScore":"0.9991813164782087",
+               "@percentageOfSecondRank":"0.1422872887244497",
+               "@support":"3",
+               "@priorScore":"2.8799662606192636E-8",
+               "@finalScore":"0.8754365122251001",
+               "@types":""
+            },
+            {
+               "@label":"Delft University of Technology",
+               "@uri":"Delft_University_of_Technology",
+               "@contextualScore":"8.186418452925803E-4",
+               "@percentageOfSecondRank":"0.0",
+               "@support":"521",
+               "@priorScore":"5.001541405942121E-6",
+               "@finalScore":"0.12456348777489806",
+               "@types":"DBpedia:Agent, Schema:Organization, DBpedia:Organisation, Schema:EducationalOrganization, DBpedia:EducationalInstitution, Schema:CollegeOrUniversity, DBpedia:University"
+            }
+         ]
+      }
+   }
+}
+    """
+    candidates = spotlight.candidates('http://localhost', 'asdasdasd',
+                                      headers={'fake_response': data})
+    expected_out = [
+        {u'resource':
+            [
+                {
+                    u'finalScore': 0.8754365122251001,
+                    u'support': 3,
+                    u'uri': u'Technische_Universiteit_Delft',
+                    u'label': u'Technische Universiteit Delft',
+                    u'types': u'',
+                    u'percentageOfSecondRank': 0.1422872887244497,
+                    u'priorScore': 2.8799662606192636e-08,
+                    u'contextualScore': 0.9991813164782087
+                },
+                {
+                    u'finalScore': 0.12456348777489806,
+                    u'support': 521,
+                    u'uri': u'Delft_University_of_Technology',
+                    u'label': u'Delft University of Technology',
+                    u'types': u'DBpedia:Agent, Schema:Organization, DBpedia:Organisation, Schema:EducationalOrganization, DBpedia:EducationalInstitution, Schema:CollegeOrUniversity, DBpedia:University',
+                    u'percentageOfSecondRank': 0.0,
+                    u'priorScore': 5.001541405942121e-06,
+                    u'contextualScore': 0.0008186418452925803
+                },
+             ],
+         u'name': u'Technische Universiteit Delft',
+         u'offset': 25
+        }
+    ]
+    eq_(candidates, expected_out)
+
+
 if not SKIP_ORDERED_DICT_TESTS:
     def test_dict_key_cleanup():
         dirty_dict = OrderedDict()

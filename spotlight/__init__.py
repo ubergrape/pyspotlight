@@ -202,5 +202,13 @@ def candidates(address, text, confidence=0.0, support=0,
         raise SpotlightException(
                 'No surface forms found in spotlight response: %s' % pydict)
 
+    # Previously we assumed that the surfaceForm is *always* a list, however
+    # depending on how many are returned, this does not have to be the case.
+    # So we are doing some good ol' duck typing here.
+    try:
+        pydict['annotation']['surfaceForm'][0]
+    except KeyError:
+        # However note that we will *always* return a list.
+        return [_dict_cleanup(pydict['annotation']['surfaceForm']), ]
     return [_dict_cleanup(form)
             for form in pydict['annotation']['surfaceForm']]
