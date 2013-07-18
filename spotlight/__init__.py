@@ -39,6 +39,10 @@ def _convert_number(value):
     """
     if isinstance(value, bool):
         return value
+    # Workaround for footnotes being put into Resources.surfaceForm and then
+    # having them parsed by the JSON parser into a list. (issue #4)
+    if isinstance(value, list):
+        value = unicode(value)
 
     try:
         return int(value)

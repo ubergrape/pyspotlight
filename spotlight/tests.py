@@ -36,6 +36,8 @@ def test_number_convert():
     eq_(spotlight._convert_number('0.2'), 0.2)
     eq_(spotlight._convert_number(True), True)
     eq_(spotlight._convert_number('evi'), 'evi')
+    # Testing the footnote workaround.
+    eq_(spotlight._convert_number([1]), '[1]')
 
 
 @raises(spotlight.SpotlightException)
@@ -80,7 +82,6 @@ def test_missing_annotation():
 def test_missing_surfaceForms():
     spotlight.candidates('http://localhost', 'asdasdasd',
             headers={'fake_response': '{"annotation": {"Test": "Win"}}'})
-
 
 
 def test_single_candidate():
