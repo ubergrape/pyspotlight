@@ -32,7 +32,7 @@ except ImportError:
 
 
 setup(name='pyspotlight',
-      version='0.6.5',
+      version='0.6.5.1',
       license='BSD',
       url='https://github.com/newsgrape/pyspotlight',
       packages=find_packages(),
