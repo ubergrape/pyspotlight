@@ -17,8 +17,17 @@ Spotlight 0.5.
 .. _`DBpedia Spotlight`: https://github.com/dbpedia-spotlight/dbpedia-spotlight#dbpedia-spotlight
 .. _`REST Interface`: https://github.com/dbpedia-spotlight/dbpedia-spotlight/wiki/Web-service
 
-Requirements
+Installation
 ============
+
+The newest stable release can be found on the `Python Package Index (PyPi) <https://pypi.python.org/pypi>`__.
+
+Therefore installation is as easy as::
+
+    pip install pyspotlight
+
+Requirements for installation from source/github
+================================================
 
 This module has been tested with Python 2.6 and Python 2.7.
 
