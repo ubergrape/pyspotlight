@@ -75,9 +75,12 @@ The same parameters apply to the ``spotlight.candidates`` function.
 
 The following exceptions can occur:
 
+* ``ValueError`` when:
+
+  - the JSON response could not be decoded.
+
 * ``SpotlightException`` when:
 
-  - the response from spotlight did not contain any valid JSON.
   - the JSON response did not contain any needed fields or was not formed as
     excepted.
   - You forgot to explicitly specify a protocol (http/https) in the API URL.
