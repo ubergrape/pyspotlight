@@ -15,11 +15,11 @@ import spotlight
 
 @nottest
 def fake_request_post(self, *args, **kwargs):
-    RawResponse = namedtuple('RawResponse', ['reason',])
+    RawResponse = namedtuple('RawResponse', ['reason', ])
     hear_me_RawR = RawResponse(reason='Just a fake reason.')
 
     class FakeResponse(spotlight.requests.models.Response):
-        text = kwargs['headers']['fake_response']
+        content = kwargs['headers']['fake_response']
 
         def raise_for_status(self):
             self.raw = hear_me_RawR
@@ -54,7 +54,7 @@ def test_http_fail():
                                 'fake_status': 502})
 
 
-@raises(spotlight.SpotlightException)
+@raises(ValueError)
 def test_annotation_invalid_json():
     spotlight.annotate('http://localhost', 'asdasdasd',
                        headers={'fake_response': 'invalid json'})
@@ -66,7 +66,7 @@ def test_missing_resources():
             headers={'fake_response': '{"Test": "Win"}'})
 
 
-@raises(spotlight.SpotlightException)
+@raises(ValueError)
 def test_candidates_invalid_json():
     spotlight.annotate('http://localhost', 'asdasdasd',
                        headers={'fake_response': 'invalid json'})

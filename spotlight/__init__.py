@@ -160,7 +160,7 @@ def annotate(address, text, confidence=0.0, support=0,
         # Every http code besides 200 shall raise an exception.
         response.raise_for_status()
 
-    pydict = response.json
+    pydict = response.json()
     if pydict is None:
         raise SpotlightException("Spotlight's response did not contain valid "
                                  "JSON: %s" % response.text)
@@ -194,11 +194,7 @@ def candidates(address, text, confidence=0.0, support=0,
         # Every http code besides 200 shall raise an exception.
         response.raise_for_status()
 
-    pydict = response.json
-    if pydict is None:
-        raise SpotlightException("Spotlight's response did not contain valid "
-                                 "JSON: %s" % response.text)
-
+    pydict = response.json()
     if not 'annotation' in pydict:
         raise SpotlightException(
                 'No annotations found in spotlight response: %s' % pydict)
