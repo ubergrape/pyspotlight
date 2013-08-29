@@ -94,7 +94,7 @@ def _dict_cleanup(dic, dict_type=dict):
 # Embarrassing!
 def annotate(address, text, confidence=0.0, support=0,
              spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', headers={}):
+             policy='whitelist', headers=None):
     """
     Annotate a text.
 
@@ -146,7 +146,7 @@ def annotate(address, text, confidence=0.0, support=0,
                'spotter': spotter, 'disambiguator': disambiguator,
                'policy': policy, 'text': text}
     reqheaders = {'accept': 'application/json'}
-    reqheaders.update(headers)
+    reqheaders.update(headers or {})
 
     # Its better for the user to have to explicitly provide a protocl in the
     # URL, since transmissions might happen over HTTPS or any other secure or
@@ -176,7 +176,7 @@ def annotate(address, text, confidence=0.0, support=0,
 # the return line being the difference haha.
 def candidates(address, text, confidence=0.0, support=0,
              spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', headers={}):
+             policy='whitelist', headers=None):
     """
     Get the candidates from a text.
 
@@ -188,7 +188,7 @@ def candidates(address, text, confidence=0.0, support=0,
                'spotter': spotter, 'disambiguator': disambiguator,
                'policy': policy, 'text': text}
     reqheaders = {'accept': 'application/json'}
-    reqheaders.update(headers)
+    reqheaders.update(headers or {})
     response = requests.post(address, data=payload, headers=reqheaders)
     if response.status_code != requests.codes.ok:
         # Every http code besides 200 shall raise an exception.
