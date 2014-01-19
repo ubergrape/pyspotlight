@@ -94,7 +94,7 @@ def _dict_cleanup(dic, dict_type=dict):
 # Embarrassing!
 def annotate(address, text, confidence=0.0, support=0,
              spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', headers=None):
+             policy='whitelist', types=None, headers=None):
     """
     Annotate a text.
 
@@ -134,7 +134,12 @@ def annotate(address, text, confidence=0.0, support=0,
 
     :param policy:
         The policy to be used.
-    :type disambiguator: string
+    :type policy: string
+
+    :param types:
+        The types of resources that will be included in the response,
+        in accordance with the policy (whitelist or blacklist).
+    :type types: string
 
     :param headers:
         Additional headers to be set on the request.
@@ -145,6 +150,9 @@ def annotate(address, text, confidence=0.0, support=0,
     payload = {'confidence': confidence, 'support': support,
                'spotter': spotter, 'disambiguator': disambiguator,
                'policy': policy, 'text': text}
+    if types:
+        payload['types'] = types
+
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers or {})
 
@@ -176,7 +184,7 @@ def annotate(address, text, confidence=0.0, support=0,
 # the return line being the difference haha.
 def candidates(address, text, confidence=0.0, support=0,
              spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', headers=None):
+             policy='whitelist', types=None, headers=None):
     """
     Get the candidates from a text.
 
@@ -187,6 +195,9 @@ def candidates(address, text, confidence=0.0, support=0,
     payload = {'confidence': confidence, 'support': support,
                'spotter': spotter, 'disambiguator': disambiguator,
                'policy': policy, 'text': text}
+    if types:
+        payload['types'] = types
+
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers or {})
     response = requests.post(address, data=payload, headers=reqheaders)
