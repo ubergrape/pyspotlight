@@ -94,7 +94,7 @@ def _dict_cleanup(dic, dict_type=dict):
 # Embarrassing!
 def annotate(address, text, confidence=0.0, support=0,
              spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', types=None, headers=None):
+             filters=None, headers=None):
     """
     Annotate a text.
 
@@ -132,14 +132,24 @@ def annotate(address, text, confidence=0.0, support=0,
         The disambiguator to use on the annotation.
     :type disambiguator: string
 
-    :param policy:
-        The policy to be used.
-    :type policy: string
+    :param filters:
+        Additional parameters that collectively define a filter function.
 
-    :param types:
-        The types of resources that will be included in the response,
-        in accordance with the policy (whitelist or blacklist).
-    :type types: string
+        For example:
+        'policy'                (string)
+                                The policy to be used:
+                                'whitelist' or 'blacklist';
+        'types'                 (string)
+                                Comma-separated list of types,
+                                i.e. 'DBpedia:Agent,Schema:Organization';
+        'sparql'                (string)
+                                Select only entities that (don't)
+                                match with the SPARQL query result;
+        'coreferenceResolution' (boolean)
+                                Annotate coreferences: true / false.
+                                Set to false to use types (statistical only).
+
+    :type filters: string
 
     :param headers:
         Additional headers to be set on the request.
@@ -149,9 +159,11 @@ def annotate(address, text, confidence=0.0, support=0,
     """
     payload = {'confidence': confidence, 'support': support,
                'spotter': spotter, 'disambiguator': disambiguator,
-               'policy': policy, 'text': text}
-    if types:
-        payload['types'] = types
+               'text': text}
+
+    filter_kwargs = {'policy': 'whitelist'}
+    filter_kwargs.update(filters or {})
+    payload.update(filter_kwargs)
 
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers or {})
@@ -184,7 +196,7 @@ def annotate(address, text, confidence=0.0, support=0,
 # the return line being the difference haha.
 def candidates(address, text, confidence=0.0, support=0,
              spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', types=None, headers=None):
+             filters=None, headers=None):
     """
     Get the candidates from a text.
 
@@ -194,9 +206,11 @@ def candidates(address, text, confidence=0.0, support=0,
     """
     payload = {'confidence': confidence, 'support': support,
                'spotter': spotter, 'disambiguator': disambiguator,
-               'policy': policy, 'text': text}
-    if types:
-        payload['types'] = types
+               'text': text}
+
+    filter_kwargs = {'policy': 'whitelist'}
+    filter_kwargs.update(filters or {})
+    payload.update(filter_kwargs)
 
     reqheaders = {'accept': 'application/json'}
     reqheaders.update(headers or {})
