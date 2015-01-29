@@ -93,7 +93,7 @@ def _dict_cleanup(dic, dict_type=dict):
 # Most of the class-based approach had the problems he described.
 # Embarrassing!
 def annotate(address, text, confidence=0.0, support=0,
-             spotter='LingPipeSpotter', disambiguator='Default',
+             spotter='Default', disambiguator='Default',
              filters=None, headers=None):
     """
     Annotate a text.
@@ -195,7 +195,7 @@ def annotate(address, text, confidence=0.0, support=0,
 # This is more or less a duplicate of the annotate function, with just
 # the return line being the difference haha.
 def candidates(address, text, confidence=0.0, support=0,
-             spotter='LingPipeSpotter', disambiguator='Default',
+             spotter='Default', disambiguator='Default',
              filters=None, headers=None):
     """
     Get the candidates from a text.
