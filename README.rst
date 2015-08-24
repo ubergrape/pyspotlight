@@ -4,15 +4,15 @@ pyspotlight
 
 is a thin python wrapper around `DBpedia Spotlight`_'s `REST Interface`_.
 
-The currently supported DBpedia Spotlight versions are 0.5 and 0.6.5.
-However, as long as there are no major API overhauls, this wrapper might also
+The tested DBpedia Spotlight versions are 0.5 and 0.6.5, though it seems to also work with 0.7 as confirmed by some users.
+As long as there are no major API overhauls, this wrapper might also
 work with future versions. If you encounter a bug with a newer DBpedia version,
 feel free to create an issue here on github.
 
-Note that I'm trying to track DBpedia Spotlight release version numbers, so you can
+Note that we're trying to track DBpedia Spotlight release version numbers, so you can
 easily see which pyspotlight version has been tested with which Spotlight
 release. Therefore all pyspotlight 0.5 releases are tested against
-Spotlight 0.5.
+Spotlight 0.5 etc.
 
 .. _`DBpedia Spotlight`: https://github.com/dbpedia-spotlight/dbpedia-spotlight#dbpedia-spotlight
 .. _`REST Interface`: https://github.com/dbpedia-spotlight/dbpedia-spotlight/wiki/Web-service
@@ -55,7 +55,22 @@ Usage
 =====
 
 if you just want to play around with spotlight, there is a running version
-available under ``http://spotlight.dbpedia.org/rest/annotate``.
+available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where ``LANG_PORT`` is one of the following depending on the language you want to annotate (thx to @robert-boulanger in Issue #10)::
+    
+    LANG_PORTS = {
+        "english": '2222', 
+        "german": '2226', 
+        "dutch": '2232', 
+        "hungarian": '2229', 
+        "french": '2225', 
+        "portuguese": '2228', 
+        "italian": '2230', 
+        "russian": '2227', 
+        "turkish": '2235', 
+        "spanish": '2231'
+    }
+
+(Also the public server doesn't like the ``LingPipeSpotter``, which is used by *pyspotlight* by default. To work around this, simply pass ``spotter='Default'`` to the ``annotate()`` call)
 
 Usage is simple and easy, just as is the API::
 
