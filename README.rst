@@ -55,23 +55,22 @@ Usage
 =====
 
 if you just want to play around with spotlight, there is a running version
-available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where `LANG_PORT` is one of the following depending on the language you want to annotate (thx to @robert-boulanger in Issue #10):
+available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where ``LANG_PORT`` is one of the following depending on the language you want to annotate (thx to @robert-boulanger in Issue #10)::
+    
+    LANG_PORTS = {
+        "english": '2222', 
+        "german": '2226', 
+        "dutch": '2232', 
+        "hungarian": '2229', 
+        "french": '2225', 
+        "portuguese": '2228', 
+        "italian": '2230', 
+        "russian": '2227', 
+        "turkish": '2235', 
+        "spanish": '2231'
+    }
 
-```python
-LANG_PORTS = {
-    "english": '2222', 
-    "german": '2226', 
-    "dutch": '2232', 
-    "hungarian": '2229', 
-    "french": '2225', 
-    "portuguese": '2228', 
-    "italian": '2230', 
-    "russian": '2227', 
-    "turkish": '2235', 
-    "spanish": '2231'}
-```
-
-(Also the public server doesn't like the `LingPipeSpotter`, which is used by *pyspotlight* by default. To work around this, simply pass `spotter='Default'` to the `annotate()` call)
+(Also the public server doesn't like the ``LingPipeSpotter``, which is used by *pyspotlight* by default. To work around this, simply pass ``spotter='Default'`` to the ``annotate()`` call)
 
 Usage is simple and easy, just as is the API::
 
