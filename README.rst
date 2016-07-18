@@ -29,7 +29,7 @@ Therefore installation is as easy as::
 Requirements for installation from source/github
 ================================================
 
-This module has been tested with Python 2.6 and Python 2.7.
+This module has been tested with Python 2.7 and Python 3.5.
 
 As long as you use the ``setup.py`` for the installation
 (``python setup.py install``), you'll be fine because Python takes care of the
@@ -56,17 +56,17 @@ Usage
 
 if you just want to play around with spotlight, there is a running version
 available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where ``LANG_PORT`` is one of the following depending on the language you want to annotate (thx to @robert-boulanger in Issue #10)::
-    
+
     LANG_PORTS = {
-        "english": '2222', 
-        "german": '2226', 
-        "dutch": '2232', 
-        "hungarian": '2229', 
-        "french": '2225', 
-        "portuguese": '2228', 
-        "italian": '2230', 
-        "russian": '2227', 
-        "turkish": '2235', 
+        "english": '2222',
+        "german": '2226',
+        "dutch": '2232',
+        "hungarian": '2229',
+        "french": '2225',
+        "portuguese": '2228',
+        "italian": '2230',
+        "russian": '2227',
+        "turkish": '2235',
         "spanish": '2231'
     }
 

@@ -14,13 +14,13 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
 ]
 
-requires = ["requests=>2.10.0", ]
+requires = ["requests", ]
 
 # This might not be the best idea.
 try:
     import json
 except ImportError:
-    requires.append('simplejson>=2.0')
+    requires.append('simplejson')
 
 
 # Python 2.6 does not ship with an OrderedDict implementation.
@@ -28,17 +28,18 @@ except ImportError:
 try:
     from collections import OrderedDict
 except ImportError:
-    requires.append('ordereddict>=1.1')
+    requires.append('ordereddict')
 
 
 setup(name='pyspotlight',
-      version='0.6.5.2',
+      version='0.7.0',
       license='BSD',
-      url='https://github.com/newsgrape/pyspotlight',
+      url='https://github.com/aolieman/pyspotlight',
       packages=find_packages(),
       description='Python interface to the DBPedia Spotlight REST API',
       long_description=open('README.rst').read(),
       keywords="dbpedia spotlight semantic",
       classifiers=classifiers,
       install_requires=requires,
+      test_suite='nose2.collector.collector',
 )

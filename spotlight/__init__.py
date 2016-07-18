@@ -4,18 +4,9 @@ Python DBpedia Spotlight API Wrapper
 
 This is just a simple interface to a Spotlight API.
 
-Tested with DBPedia Spotlight 0.5 and 0.6.5.
-
-Note that I'm trying to track Spotlight release version numbers, so you can
-easily see which pyspotlight version has been tested with which Spotlight
-release.
-
-I hope the code and the small documentation speaks for itself :-)
-
-If you should encounter any problems, feel free to contact me on github
-(originell). I'm happy to help out with anything related to my code.
+Tested with DBPedia Spotlight 0.7.
 """
-__version_info__ = (0, 6, 5)
+__version_info__ = (0, 7, 0)
 __version__ = '.'.join(map(str, __version_info__))
 
 
@@ -42,7 +33,7 @@ def _convert_number(value):
     # Workaround for footnotes being put into Resources.surfaceForm and then
     # having them parsed by the JSON parser into a list. (issue #4)
     if isinstance(value, list):
-        value = unicode(value)
+        value = str(value)
 
     try:
         return int(value)
@@ -61,7 +52,7 @@ def _dict_cleanup(dic, dict_type=dict):
           That way we can avoid stack fails.
     """
     clean = dict_type()
-    for key, value in dic.iteritems():
+    for key, value in dic.items():
         if value is None:
             continue
 
@@ -70,7 +61,7 @@ def _dict_cleanup(dic, dict_type=dict):
             try:
                 # If this is a string or bool,
                 # go straight to type conversion.
-                if (isinstance(value, basestring) or
+                if (hasattr(value, 'strip') or
                         isinstance(value, bool)):
                     raise AttributeError
                 # Test for an iterable (list, tuple, set)
@@ -86,12 +77,7 @@ def _dict_cleanup(dic, dict_type=dict):
 
 
 # Main functions.
-#
-# I was inspired to go back to a function based approach after seeing this
-# awesome talk by Jack Diederich: Stop Writing Classes
-# http://pyvideo.org/video/880/stop-writing-classes
-# Most of the class-based approach had the problems he described.
-# Embarrassing!
+
 def annotate(address, text, confidence=0.0, support=0,
              spotter='Default', disambiguator='Default',
              filters=None, headers=None):
@@ -157,9 +143,13 @@ def annotate(address, text, confidence=0.0, support=0,
 
     :rtype: list of resources
     """
-    payload = {'confidence': confidence, 'support': support,
-               'spotter': spotter, 'disambiguator': disambiguator,
-               'text': text}
+    payload = {
+        'confidence': confidence,
+        'support': support,
+        'text': text,
+        'spotter': spotter,
+        'disambiguator': disambiguator
+    }
 
     filter_kwargs = {'policy': 'whitelist'}
     filter_kwargs.update(filters or {})
@@ -204,9 +194,13 @@ def candidates(address, text, confidence=0.0, support=0,
 
     :rtype: list of surface forms
     """
-    payload = {'confidence': confidence, 'support': support,
-               'spotter': spotter, 'disambiguator': disambiguator,
-               'text': text}
+    payload = {
+        'confidence': confidence,
+        'support': support,
+        'text': text,
+        'spotter': spotter,
+        'disambiguator': disambiguator
+    }
 
     filter_kwargs = {'policy': 'whitelist'}
     filter_kwargs.update(filters or {})
