@@ -1,2 +1,1 @@
-# Testing also requires nose>=1.2.1
 requests>=2.10.0
