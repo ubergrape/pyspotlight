@@ -5,30 +5,26 @@ from setuptools import find_packages
 
 
 classifiers = [
-    "Intended Audience :: Developers",
-    "Programming Language :: Python",
-    "Operating System :: OS Independent",
-    "Topic :: Software Development :: Libraries",
-    "Environment :: Web Environment",
-    "License :: OSI Approved :: BSD License",
-    "Development Status :: 5 - Production/Stable",
+    'Intended Audience :: Developers',
+    'Operating System :: OS Independent',
+    'Topic :: Software Development :: Libraries',
+    'Environment :: Web Environment',
+    'License :: OSI Approved :: BSD License',
+    'Development Status :: 5 - Production/Stable',
+    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5',
 ]
 
-requires = ["requests", ]
+requires = [
+    'requests~=2.10',
+]
 
 # This might not be the best idea.
 try:
     import json
 except ImportError:
     requires.append('simplejson')
-
-
-# Python 2.6 does not ship with an OrderedDict implementation.
-# God save the cheeseshop!
-try:
-    from collections import OrderedDict
-except ImportError:
-    requires.append('ordereddict')
 
 
 setup(name='pyspotlight',
@@ -38,7 +34,7 @@ setup(name='pyspotlight',
       packages=find_packages(),
       description='Python interface to the DBPedia Spotlight REST API',
       long_description=open('README.rst').read(),
-      keywords="dbpedia spotlight semantic",
+      keywords=['dbpedia spotlight', 'semantic annotation', 'entity linking'],
       classifiers=classifiers,
       install_requires=requires,
       test_suite='nose2.collector.collector',
