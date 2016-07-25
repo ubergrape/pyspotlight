@@ -5,8 +5,7 @@ v0.7.1 (2016-07-25)
 -------------------
 
 - Moved the shared request logic in ``annotate`` and ``candidates`` to a
-  helper function.
-  [Alex Olieman]
+  helper function. [Alex Olieman]
 
 - Updated setup/package files [Alex Olieman]
 
@@ -23,14 +22,14 @@ API Changes
 
 - Moved filter parameters into a ``filters`` argument. [Alex Olieman]
 
-  * **Removed** the ``policy`` argument from ``annotate()`` and ``candidates()``.
+  * **Removed** the ``policy`` argument from ``annotate`` and ``candidates``.
   * Added a types parameter, which enables server-side filtering of resources.
     It also makes for a nice addition to the policy parameter.
 
 Additions
 ~~~~~~~~~
 
-- Py3-compatible 0.7 release. [Alex Olieman]
+- Python 3 compatibility. [Alex Olieman]
 
 - Moved to nose2 for tests. [Alex Olieman]
 
@@ -39,26 +38,27 @@ Fixes
 
 - Updated required version of the requests package. [Alex Olieman]
 
-- Remove dict from method signature. fixes #8. [Luis Nell]
+- Remove mutable default arguments. [Luis Nell]
 
 v0.6.5.2 (2013-08-27)
 ---------------------
 
-- Add manifest so README is included on pypi. [Luis Nell]
+- Add manifest so README is included on PyPI. [Luis Nell]
 
 v0.6.5.1 (2013-08-12)
 ---------------------
 
-- Update README for pypi release. [Luis Nell]
+- Update README for PyPI release. [Luis Nell]
 
 - Upgrade to requests 1.2.3. [Luis Nell]
 
 - BSD License. [Luis Nell]
 
-- Workaround footnotes in surfaceForm parsed as list. fixes #4. [Luis
-  Nell]
+- Workaround for footnotes in ``surfaceForm`` that get parsed as a list.
+  [Luis Nell]
 
-- Fix #3. [Luis Nell]
+- Do not assume in ``candidates`` that ``surfaceForm`` is always a list.
+  [Luis Nell]
 
 v0.6.5 (2012-10-07)
 -------------------
@@ -91,7 +91,8 @@ Fixes
 - Fixed typos, wrong link. [Pablo Mendes]
 
   * Minor: We spell it DBpedia, not DBPedia :)
-  * Fix: Link pointed to OpenCalais, a commercial closed-source alternative to DBpedia Spotlight
+  * Fix: Link pointed to OpenCalais, a commercial closed-source
+    alternative to DBpedia Spotlight
 
 v0.5.3 (2012-08-01)
 -------------------
