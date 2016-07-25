@@ -37,7 +37,7 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
 
 
 setup(name='pyspotlight',
-      version='0.7.0',
+      version='0.7.1',
       license='BSD',
       url='https://github.com/aolieman/pyspotlight',
       packages=find_packages(),
