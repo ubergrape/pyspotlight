@@ -23,13 +23,6 @@ tests_require = [
     'nose2~=0.6',
 ]
 
-# This might not be the best idea.
-try:
-    import json
-except ImportError:
-    requires.append('simplejson')
-
-
 with open('README.rst', 'r', encoding='utf-8') as f:
     readme = f.read()
 with open('HISTORY.rst', 'r', encoding='utf-8') as f:
