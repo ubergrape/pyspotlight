@@ -124,7 +124,7 @@ implemented in pyspotlight. Feel free to contribute :-)!
 DBpedia Spotlight demo server
 -----------------------------
 If you just want to play around with spotlight, there is a running version
-available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where ``LANG_PORT`` is one of the following depending on the language you want to annotate (thanks @robert-boulanger in `Issue #10`_)::
+available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where ``LANG_PORT`` is one of the following depending on the language you want to annotate (thanks @robert-boulanger in `ubergrape/pyspotlight#10`_)::
 
     LANG_PORTS = {
         "english": '2222',
@@ -139,7 +139,7 @@ available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where ``
         "spanish": '2231'
     }
 
-.. _`Issue #10`: https://github.com/ubergrape/pyspotlight/issues/10
+.. _`ubergrape/pyspotlight#10`: https://github.com/ubergrape/pyspotlight/issues/10
 
 Exceptions
 ----------
@@ -204,6 +204,6 @@ Bugs
 ====
 
 In case you spot a bug, please open an issue and attach the raw response you
-sent. Have a look at `Issue #3`_ for an example on how to file a good bug report.
+sent. Have a look at `ubergrape/pyspotlight#3`_ for an example on how to file a good bug report.
 
-.. _`Issue #3`: https://github.com/ubergrape/pyspotlight/issues/3
+.. _`ubergrape/pyspotlight#3`: https://github.com/ubergrape/pyspotlight/issues/3
