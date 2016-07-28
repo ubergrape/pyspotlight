@@ -30,7 +30,7 @@ Therefore installation is as easy as::
 
 Older releases can be installed by specifying a version::
 
-    pip install pyspotlight~=0.6
+    pip install pyspotlight~=0.6.1
 
 Requirements for installation from source/github
 ================================================
