@@ -108,7 +108,10 @@ def _dict_cleanup(dic, dict_type=dict):
             except KeyError:
                 clean[key] = _dict_cleanup(value, dict_type)
         except AttributeError:
-            clean[key] = _convert_number(value)
+            if key == 'surfaceForm':
+                clean[key] = value
+            else:
+                clean[key] = _convert_number(value)
     return clean
 
 
