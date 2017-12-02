@@ -153,6 +153,8 @@ def test_dict_key_cleanup():
     dirty_dict['@empty'] = None  # None values should be removed.
     dirty_dict['@recursive'] = OrderedDict()
     dirty_dict['@recursive']['tests'] = '1'
+    dirty_dict['@recursive']['surfaceForm'] = '02'
+    dirty_dict['@recursive']['name'] = '02'
     dirty_dict['@recursive']['stuff'] = OrderedDict()
     more = OrderedDict()
     more['something'] = 'isgoingon'
@@ -165,6 +167,8 @@ def test_dict_key_cleanup():
     clean_dict['dirty'] = 'value'
     clean_dict['recursive'] = OrderedDict()
     clean_dict['recursive']['tests'] = 1
+    clean_dict['recursive']['surfaceForm'] = '02'
+    clean_dict['recursive']['name'] = '02'
     clean_dict['recursive']['stuff'] = OrderedDict()
     more = OrderedDict()
     more['something'] = 'isgoingon'
