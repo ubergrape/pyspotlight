@@ -16,8 +16,8 @@ Spotlight 0.6.x, etc. While we aim for backwards-compatibility with older
 Spotlight releases, it is not guaranteed. If you're using an older Spotlight
 version, you may need to use an older pyspotlight version as well.
 
-.. _`DBpedia Spotlight`: https://github.com/dbpedia-spotlight/dbpedia-spotlight#dbpedia-spotlight
-.. _`REST Interface`: https://github.com/dbpedia-spotlight/dbpedia-spotlight/wiki/Web-service
+.. _`DBpedia Spotlight`: http://www.dbpedia-spotlight.org/faq
+.. _`REST Interface`: http://www.dbpedia-spotlight.org/api
 
 Installation
 ============
@@ -121,25 +121,19 @@ only the top candidate.
 Note that the Spotlight API may support other interfaces that have not been
 implemented in pyspotlight. Feel free to contribute :-)!
 
-DBpedia Spotlight demo server
+Running DBpedia Spotlight
 -----------------------------
-If you just want to play around with spotlight, there is a running version
-available under ``http://spotlight.sztaki.hu:LANG_PORT/rest/annotate``, where ``LANG_PORT`` is one of the following depending on the language you want to annotate (thanks @robert-boulanger in `ubergrape/pyspotlight#10`_)::
+If you just want to play around with Spotlight, there is an interactive demo
+available at `demo.dbpedia-spotlight.org`_. To submit pyspotlight
+requests to the demo servers, you may use the endpoints found in `sites.xml`_.
 
-    LANG_PORTS = {
-        "english": '2222',
-        "german": '2226',
-        "dutch": '2232',
-        "hungarian": '2229',
-        "french": '2225',
-        "portuguese": '2228',
-        "italian": '2230',
-        "russian": '2227',
-        "turkish": '2235',
-        "spanish": '2231'
-    }
+.. _demo.dbpedia-spotlight.org : http://demo.dbpedia-spotlight.org/
+.. _sites.xml: http://demo.dbpedia-spotlight.org/config/sites.xml
 
-.. _`ubergrape/pyspotlight#10`: https://github.com/ubergrape/pyspotlight/issues/10
+For any significant Spotlight usage, it is strongly recommended to run
+your own server. Please follow the `installation instructions`_.
+
+.. _installation instructions: http://www.dbpedia-spotlight.org/faq#i-want-to-install-the-tool-how-do-i-do
 
 Exceptions
 ----------

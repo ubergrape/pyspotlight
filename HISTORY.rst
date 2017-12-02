@@ -1,6 +1,17 @@
 Changelog
 =========
 
+v0.7.2 (2017-12-02)
+-------------------
+
+- Updated README instructions and links. [Alex Olieman]
+
+- Ensure that ``candidates`` returns surface forms as strings. [Alex Olieman]
+
+- Ensure that surface forms are always strings (merge `PR #1`_). [ShomyLiu & Alex Olieman]
+
+.. _PR #1: https://github.com/aolieman/pyspotlight/pull/1
+
 v0.7.1 (2016-07-25)
 -------------------
 

@@ -6,7 +6,7 @@ This is just a simple interface to a Spotlight API.
 
 Tested with DBPedia Spotlight 0.7.
 """
-__version_info__ = (0, 7, 1)
+__version_info__ = (0, 7, 2)
 __version__ = '.'.join(map(str, __version_info__))
 __url__ = 'https://github.com/aolieman/pyspotlight'
 
@@ -41,7 +41,7 @@ def _post_request(address, payload, filters, headers):
     # Its better for the user to have to explicitly provide a protocol in the
     # URL, since transmissions might happen over HTTPS or any other secure or
     # faster (spdy/HTTP2 :D) channel.
-    if not '://' in address:
+    if '://' not in address:
         raise SpotlightException('Oops. Looks like you forgot the protocol '
                                  '(http/https) in your url (%s).' % address)
 
@@ -108,7 +108,10 @@ def _dict_cleanup(dic, dict_type=dict):
             except KeyError:
                 clean[key] = _dict_cleanup(value, dict_type)
         except AttributeError:
-            clean[key] = _convert_number(value)
+            if key in {'surfaceForm', 'name'}:
+                clean[key] = value
+            else:
+                clean[key] = _convert_number(value)
     return clean
 
 
@@ -188,7 +191,7 @@ def annotate(address, text, confidence=0.0, support=0,
 
     pydict = _post_request(address, payload, filters, headers)
 
-    if not 'Resources' in pydict:
+    if 'Resources' not in pydict:
         raise SpotlightException(
             'No Resources found in spotlight response: %s' % pydict
         )
@@ -216,11 +219,11 @@ def candidates(address, text, confidence=0.0, support=0,
 
     pydict = _post_request(address, payload, filters, headers)
 
-    if not 'annotation' in pydict:
+    if 'annotation' not in pydict:
         raise SpotlightException(
             'No annotations found in spotlight response: %s' % pydict
         )
-    if not 'surfaceForm' in pydict['annotation']:
+    if 'surfaceForm' not in pydict['annotation']:
         raise SpotlightException(
             'No surface forms found in spotlight response: %s' % pydict
         )
