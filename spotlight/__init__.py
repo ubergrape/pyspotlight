@@ -6,7 +6,7 @@ This is just a simple interface to a Spotlight API.
 
 Tested with DBPedia Spotlight 0.7.
 """
-__version_info__ = (0, 7, 1)
+__version_info__ = (0, 7, 2)
 __version__ = '.'.join(map(str, __version_info__))
 __url__ = 'https://github.com/aolieman/pyspotlight'
 
