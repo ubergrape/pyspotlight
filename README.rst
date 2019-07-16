@@ -1,3 +1,8 @@
+
+
+Maintenance of this repository has stopped. You can find a new, maintained, version at https://github.com/aolieman/pyspotlight
+
+
 ===========
 pyspotlight
 ===========
