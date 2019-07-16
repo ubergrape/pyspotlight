@@ -1,0 +1,4 @@
+-r requirements.txt
+nose2~=0.6
+wheel
+gitchangelog~=3.0

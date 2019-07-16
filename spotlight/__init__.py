@@ -4,19 +4,11 @@ Python DBpedia Spotlight API Wrapper
 
 This is just a simple interface to a Spotlight API.
 
-Tested with DBPedia Spotlight 0.5 and 0.6.5.
-
-Note that I'm trying to track Spotlight release version numbers, so you can
-easily see which pyspotlight version has been tested with which Spotlight
-release.
-
-I hope the code and the small documentation speaks for itself :-)
-
-If you should encounter any problems, feel free to contact me on github
-(originell). I'm happy to help out with anything related to my code.
+Tested with DBPedia Spotlight 0.7.
 """
-__version_info__ = (0, 6, 5)
+__version_info__ = (0, 7, 2)
 __version__ = '.'.join(map(str, __version_info__))
+__url__ = 'https://github.com/aolieman/pyspotlight'
 
 
 import requests
@@ -33,6 +25,39 @@ class SpotlightException(Exception):
 
 
 # Some helper functions.
+
+def _post_request(address, payload, filters, headers):
+    """
+    Build the Spotlight request, POST it to the server, and return
+    the response's JSON body.
+    """
+    filter_kwargs = {'policy': 'whitelist'}
+    filter_kwargs.update(filters or {})
+    payload.update(filter_kwargs)
+
+    reqheaders = {'accept': 'application/json'}
+    reqheaders.update(headers or {})
+
+    # Its better for the user to have to explicitly provide a protocol in the
+    # URL, since transmissions might happen over HTTPS or any other secure or
+    # faster (spdy/HTTP2 :D) channel.
+    if '://' not in address:
+        raise SpotlightException('Oops. Looks like you forgot the protocol '
+                                 '(http/https) in your url (%s).' % address)
+
+    response = requests.post(address, data=payload, headers=reqheaders)
+
+    # http status codes >=400,<600 shall raise an exception.
+    response.raise_for_status()
+
+    json_body = response.json()
+    if json_body is None:
+        raise SpotlightException("Spotlight's response did not contain valid "
+                                 "JSON: %s" % response.text)
+
+    return json_body
+
+
 def _convert_number(value):
     """
     Try to convert a string to an int or float.
@@ -42,7 +67,7 @@ def _convert_number(value):
     # Workaround for footnotes being put into Resources.surfaceForm and then
     # having them parsed by the JSON parser into a list. (issue #4)
     if isinstance(value, list):
-        value = unicode(value)
+        value = str(value)
 
     try:
         return int(value)
@@ -61,7 +86,7 @@ def _dict_cleanup(dic, dict_type=dict):
           That way we can avoid stack fails.
     """
     clean = dict_type()
-    for key, value in dic.iteritems():
+    for key, value in dic.items():
         if value is None:
             continue
 
@@ -70,33 +95,33 @@ def _dict_cleanup(dic, dict_type=dict):
             try:
                 # If this is a string or bool,
                 # go straight to type conversion.
-                if (isinstance(value, basestring) or
+                if (hasattr(value, 'strip') or
                         isinstance(value, bool)):
                     raise AttributeError
                 # Test for an iterable (list, tuple, set)
                 value[0]
                 # Clean up each element in the iterable
-                clean[key] = [_dict_cleanup(element, dict_type)
-                                for element in value]
+                clean[key] = [
+                    _dict_cleanup(element, dict_type)
+                    for element in value
+                ]
             except KeyError:
                 clean[key] = _dict_cleanup(value, dict_type)
         except AttributeError:
-            clean[key] = _convert_number(value)
+            if key in {'surfaceForm', 'name'}:
+                clean[key] = value
+            else:
+                clean[key] = _convert_number(value)
     return clean
 
 
 # Main functions.
-#
-# I was inspired to go back to a function based approach after seeing this
-# awesome talk by Jack Diederich: Stop Writing Classes
-# http://pyvideo.org/video/880/stop-writing-classes
-# Most of the class-based approach had the problems he described.
-# Embarrassing!
+
 def annotate(address, text, confidence=0.0, support=0,
-             spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', headers=None):
+             spotter='Default', disambiguator='Default',
+             filters=None, headers=None):
     """
-    Annotate a text.
+    Get semantic annotations (i.e. entity links) from a text.
 
     Can raise :exc:`requests.exceptions.HTTPError` or
     :exc:`SpotlightException`, depending on where the failure is (HTTP status
@@ -117,10 +142,9 @@ def annotate(address, text, confidence=0.0, support=0,
     :type confidence: float
 
     :param support:
-        Only output annotations above a given prominence (support).
-        Based on my experience I would suggest you set this to something
-        above 20, however your experience might vary from text to text.
-    :type support: int
+        Only output annotations above a given prominence (i.e. support,
+        indegree on Wikipedia).
+    :type support: integer
 
     :param spotter:
         One of spotters available on your DBPedia Spotlight server.
@@ -132,9 +156,24 @@ def annotate(address, text, confidence=0.0, support=0,
         The disambiguator to use on the annotation.
     :type disambiguator: string
 
-    :param policy:
-        The policy to be used.
-    :type disambiguator: string
+    :param filters:
+        Additional parameters that collectively define a filter function.
+
+        For example:
+        'policy'                (string)
+                                The policy to be used:
+                                'whitelist' or 'blacklist';
+        'types'                 (string)
+                                Comma-separated list of types,
+                                i.e. 'DBpedia:Agent,Schema:Organization';
+        'sparql'                (string)
+                                Select only entities that (don't)
+                                match with the SPARQL query result;
+        'coreferenceResolution' (boolean)
+                                Annotate coreferences: true / false.
+                                Set to false to use types (statistical only).
+
+    :type filters: dictionary
 
     :param headers:
         Additional headers to be set on the request.
@@ -142,65 +181,52 @@ def annotate(address, text, confidence=0.0, support=0,
 
     :rtype: list of resources
     """
-    payload = {'confidence': confidence, 'support': support,
-               'spotter': spotter, 'disambiguator': disambiguator,
-               'policy': policy, 'text': text}
-    reqheaders = {'accept': 'application/json'}
-    reqheaders.update(headers or {})
+    payload = {
+        'confidence': confidence,
+        'support': support,
+        'text': text,
+        'spotter': spotter,
+        'disambiguator': disambiguator
+    }
 
-    # Its better for the user to have to explicitly provide a protocl in the
-    # URL, since transmissions might happen over HTTPS or any other secure or
-    # faster (spdy :D) channel.
-    if not '://' in address:
-        raise SpotlightException('Oops. Looks like you forgot the protocol '
-                                 '(http/https) in your url (%s).' % address)
+    pydict = _post_request(address, payload, filters, headers)
 
-    response = requests.post(address, data=payload, headers=reqheaders)
-    if response.status_code != requests.codes.ok:
-        # Every http code besides 200 shall raise an exception.
-        response.raise_for_status()
-
-    pydict = response.json()
-    if pydict is None:
-        raise SpotlightException("Spotlight's response did not contain valid "
-                                 "JSON: %s" % response.text)
-
-    if not 'Resources' in pydict:
+    if 'Resources' not in pydict:
         raise SpotlightException(
-                'No Resources found in spotlight response: %s' % pydict)
+            'No Resources found in spotlight response: %s' % pydict
+        )
 
     return [_dict_cleanup(resource) for resource in pydict['Resources']]
 
 
-# This is more or less a duplicate of the annotate function, with just
-# the return line being the difference haha.
 def candidates(address, text, confidence=0.0, support=0,
-             spotter='LingPipeSpotter', disambiguator='Default',
-             policy='whitelist', headers=None):
+               spotter='Default', disambiguator='Default',
+               filters=None, headers=None):
     """
-    Get the candidates from a text.
+    Get the candidate entities from a text.
 
     Uses the same arguments as :meth:`annotate`.
 
     :rtype: list of surface forms
     """
-    payload = {'confidence': confidence, 'support': support,
-               'spotter': spotter, 'disambiguator': disambiguator,
-               'policy': policy, 'text': text}
-    reqheaders = {'accept': 'application/json'}
-    reqheaders.update(headers or {})
-    response = requests.post(address, data=payload, headers=reqheaders)
-    if response.status_code != requests.codes.ok:
-        # Every http code besides 200 shall raise an exception.
-        response.raise_for_status()
+    payload = {
+        'confidence': confidence,
+        'support': support,
+        'text': text,
+        'spotter': spotter,
+        'disambiguator': disambiguator
+    }
 
-    pydict = response.json()
-    if not 'annotation' in pydict:
+    pydict = _post_request(address, payload, filters, headers)
+
+    if 'annotation' not in pydict:
         raise SpotlightException(
-                'No annotations found in spotlight response: %s' % pydict)
-    if not 'surfaceForm' in pydict['annotation']:
+            'No annotations found in spotlight response: %s' % pydict
+        )
+    if 'surfaceForm' not in pydict['annotation']:
         raise SpotlightException(
-                'No surface forms found in spotlight response: %s' % pydict)
+            'No surface forms found in spotlight response: %s' % pydict
+        )
 
     # Previously we assumed that the surfaceForm is *always* a list, however
     # depending on how many are returned, this does not have to be the case.
@@ -210,5 +236,7 @@ def candidates(address, text, confidence=0.0, support=0,
     except KeyError:
         # However note that we will *always* return a list.
         return [_dict_cleanup(pydict['annotation']['surfaceForm']), ]
-    return [_dict_cleanup(form)
-            for form in pydict['annotation']['surfaceForm']]
+    return [
+        _dict_cleanup(form)
+        for form in pydict['annotation']['surfaceForm']
+    ]
